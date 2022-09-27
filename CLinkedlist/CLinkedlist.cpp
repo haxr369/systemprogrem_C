@@ -15,7 +15,13 @@ typedef struct node {
 } Node;
 
 
-
+void printLL(Node* pHead) {
+	Node *pNode = pHead;  //pNode를 초기화
+	while (pNode != NULL) {
+		printf("data = %d\n", pNode->data); //현재 pNdoe의 데이터 출력
+		pNode = pNode->pNext;			  // pNode를 다음 노드의 주소로 update
+	}
+}
 
 int main()
 {
@@ -40,13 +46,7 @@ int main()
 	pHead = pNode1;        //pHead 노드 다음은 pNode1 노드로 연결.
 	//pHead->pNext->pNext; //NULL이 나온다. 왜? ->는 왼쪽 부터 연산하기 때문에
 
-	pNode = pHead;  //pNode를 초기화
-	while (pNode != NULL) {
-
-		printf("data = %d\n", pNode->data); //현재 pNdoe의 데이터 출력
-		pNode = pNode->pNext;			  // pNode를 다음 노드의 주소로 update
-
-	}
+	printLL(pHead);
 
 	return 0;
 }
