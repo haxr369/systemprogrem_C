@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "20220927Creview", "20220927
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CLinkedlist", "CLinkedlist\CLinkedlist.vcxproj", "{07C826F7-42D0-4F20-8A25-B11CE78F4EA1}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "10_04_linked_list_ohchansol", "10_04_linked_list_ohchansol\10_04_linked_list_ohchansol.vcxproj", "{58AFD257-8308-49FE-A9E1-3282D34751C1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{07C826F7-42D0-4F20-8A25-B11CE78F4EA1}.Release|x64.Build.0 = Release|x64
 		{07C826F7-42D0-4F20-8A25-B11CE78F4EA1}.Release|x86.ActiveCfg = Release|Win32
 		{07C826F7-42D0-4F20-8A25-B11CE78F4EA1}.Release|x86.Build.0 = Release|Win32
+		{58AFD257-8308-49FE-A9E1-3282D34751C1}.Debug|x64.ActiveCfg = Debug|x64
+		{58AFD257-8308-49FE-A9E1-3282D34751C1}.Debug|x64.Build.0 = Debug|x64
+		{58AFD257-8308-49FE-A9E1-3282D34751C1}.Debug|x86.ActiveCfg = Debug|Win32
+		{58AFD257-8308-49FE-A9E1-3282D34751C1}.Debug|x86.Build.0 = Debug|Win32
+		{58AFD257-8308-49FE-A9E1-3282D34751C1}.Release|x64.ActiveCfg = Release|x64
+		{58AFD257-8308-49FE-A9E1-3282D34751C1}.Release|x64.Build.0 = Release|x64
+		{58AFD257-8308-49FE-A9E1-3282D34751C1}.Release|x86.ActiveCfg = Release|Win32
+		{58AFD257-8308-49FE-A9E1-3282D34751C1}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
