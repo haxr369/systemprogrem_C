@@ -54,11 +54,11 @@ int main()
     return EXIT_SUCCESS;
 }
 
-DWORD WINAPI ThreadFunc(LPVOID in)
+DWORD WINAPI ThreadFunc(LPVOID in) // 각 Thread에서 동작하는 일
 {
     int i;
     int n = (int)in;
-    for (i = 0; i < 10000; i++)
-        printf("%d%d%d%d%d%d%d%d\n", n, n, n, n, n, n, n, n);
+    while (1)  i = 1 + 10;
+        
     return 0;
 }
