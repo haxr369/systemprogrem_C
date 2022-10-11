@@ -41,7 +41,7 @@ int main()
             (LPVOID)i,//함수의 매개변수, 단 하나만 허락
             0,
             &threadId);
-        if (hThrd)
+        if (hThrd) // 함수의 포인터를 가지고 메모리에 하나의 기계어를 5개의 Thread가 공유한다.
         {
             printf("Thread launched %d\n", i);
             CloseHandle(hThrd);
