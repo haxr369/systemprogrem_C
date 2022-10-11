@@ -27,13 +27,26 @@
  //3. calling convention(함수호출방법) WINAPI    LPVOID : LP== long pointer, Long= 16bit 포인터 이상의 포인터를 사용하기 위해서 
 DWORD WINAPI ThreadFunc(LPVOID);// LPVOID ==> void*  WINAPI : 2주전에 정리했을거야, 출력:DWORD, calling convention=WINAPI,입력은 LPVOID
 // 대부분의 대문자 단어는 마이크로소프트사가 정의한 자료형이다.
+#define SingleThread  //헤더파일에서 이런 전처리기 블록을 많이 사용한단.
+
+#ifdef SingleThread // 만약 singleThred가 정의 돼있으면, 
+int main() {
+    ThreadFunc((LPVOID)10);
+
+    return 0;
+    // 하나만 사용하면 여러개의 cpu를 효율적으로 사용 못한다.
+    // 따라서 여러 Thread를 만들어서 작업을 진행하자.
+}
+
+
+#else SingleThread
 int main()
 {
     HANDLE hThrd;
     DWORD threadId;
     int i;
 
-    for (i = 0; i < 5; i++)
+    for (i = 0; i < 1; i++)
     {
         hThrd = CreateThread(NULL,    //맨날 NULL을 사용한다. 함수의 설명을 알고싶으면 F1을 누른다.
             0,
@@ -52,7 +65,8 @@ int main()
     Sleep(20000);
 
     return EXIT_SUCCESS;
-}
+} // singleThread가 정의 안돼있으면,
+#endif
 
 DWORD WINAPI ThreadFunc(LPVOID in) // 각 Thread에서 동작하는 일
 {
