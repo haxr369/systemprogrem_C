@@ -23,7 +23,7 @@ int main()
 {
     HANDLE hThrd[5];
     DWORD threadId;
-
+    DWORD return_value;
     Complex* ptr; //구조체에 포인터로 접근
     ptr = (Complex*)malloc(sizeof(Complex));
     ptr->real = 1.0;
@@ -52,11 +52,19 @@ int main()
     //Sleep(2000);//2000->20000 모든 thread가 종료할 때까지 기다리기 
 
 
-    WaitForMultipleObjects(5, //몇개 쓰레드인지
+    return_value = WaitForMultipleObjects(5, //몇개 쓰레드인지
                             hThrd, // 쓰레드 배열
                             TRUE,  //모든 쓰레드가 signaled state까지 기다린다
-                            INFINITE); //프라이머리 thrd는 wait 상태에서 기다린다.
-    
+                            500); //프라이머리 thrd는 wait 상태에서 기다린다.
+    if (return_value == WAIT_TIMEOUT) {
+        printf("time out!!\n");
+    }
+    else if (return_value == WAIT_OBJECT_0) {
+        printf("all signaled!!\n");
+    }
+    else {
+        printf(" i dont know~~~\n");
+    }
     //만약 프라이머리 thread가 끝나면 모든 그 thread가 생성한 모든 thread를 제거하고 종료한다.
 
     return EXIT_SUCCESS;
@@ -67,7 +75,7 @@ DWORD WINAPI ThreadFunc(LPVOID in) //thread함수는 무조건 LPVOID만 가능�
     int i;
     //Complex* ptr = (Complex*)in; //LPVOID에서 complex로 입력 파라미터 형변환
     int n = (int)in;
-    for (i = 0; i < 10; i++)//10->10000
+    for (i = 0; i < 100; i++)//10->10000
         //printf("%d%d%d%d%d%d%d%d\n", n, n, n, n, n, n, n, n);
         printf("%d %d %d\n", n,n,n);
     return 0;
