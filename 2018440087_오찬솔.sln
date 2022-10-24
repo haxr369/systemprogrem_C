@@ -9,7 +9,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CLinkedlist", "CLinkedlist\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "10_04_linked_list_ohchansol", "10_04_linked_list_ohchansol\10_04_linked_list_ohchansol.vcxproj", "{58AFD257-8308-49FE-A9E1-3282D34751C1}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "10_11_multithred", "10_s11_ohchansol\10_11_ohchansol.vcxproj", "{F959025E-3152-49D7-8BBE-E7954A4D1A82}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "10_11_multithred", "10_11_ohchansol\10_11_ohchansol.vcxproj", "{F959025E-3152-49D7-8BBE-E7954A4D1A82}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "10_11_pure_compute", "10_11_pure_compute\10_11_pure_compute.vcxproj", "{A5C491D9-1A25-4BF8-BFBE-6CED0150704E}"
 EndProject
