@@ -85,10 +85,10 @@ void insertHead(List* pList, Node* newNode) {
     //위의 함수는 현재 뮤텍스가 nonsignaled상태인 경우,signaled 상태가 될 때까지 기다린다.
     //만약 뮤텍스의 상태가 signaled로 변하면, 
     //  1.다음 문장으로 넘어간다.
-    //  2. 뮤텍스의 상태를 nonsignaled 상태로 만든다. (부수효과: Side Effect)
+    //  2. 뮤텍스의 상태를 깃발내린 nonsignaled 상태로 만든다. (부수효과: Side Effect)
     newNode->pNext = pList->pHead; //#1
     pList->pHead = newNode; //#2
-    ReleaseMutex(pList->hMutex);//뮤텍스의 상태를 signaled로 바꾼다.
+    ReleaseMutex(pList->hMutex);//뮤텍스의 상태를 깃발올려 signaled로 바꾼다.
 }
 
 DWORD WINAPI ThreadFunc(LPVOID);// LPVOID ==> void*
