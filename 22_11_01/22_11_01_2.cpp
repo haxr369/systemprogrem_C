@@ -26,7 +26,7 @@ typedef struct node {
 //구조체 List
 typedef struct list {
     Node* pHead;
-    CRITICAL_SECTION criticalSection;//깃발 추가
+    CRITICAL_SECTION criticalSection;//깃발 추가 모든 스레드가 깃발을 볼 수 있어야한다. 
 } List;
 //함수: createList()
 //입력: 없음
@@ -79,9 +79,17 @@ int countNode(List* pList) {
 //출력: 없음
 void insertHead(List* pList, Node* newNode) {
     EnterCriticalSection(&(pList->criticalSection));//깃발확인, 깃발 올려
+    /* 
+    * if 깃발
+    *         다음문장으로
+    *         깃발 내려 => 다른 스레드는 내려간 깃발 보고 접근 대기
+    *  else
+    *         접근대기 => 한 스레드만 접근 가능
+    
+    */
     newNode->pNext = pList->pHead; //#1
     pList->pHead = newNode; //#2
-    LeaveCriticalSection(&(pList->criticalSection));//깃발 내려
+    LeaveCriticalSection(&(pList->criticalSection));// 깃발 올려
 }
 
 DWORD WINAPI ThreadFunc(LPVOID);// LPVOID ==> void*

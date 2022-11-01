@@ -58,7 +58,7 @@ int countNode(List* pList) {
 //함수: insertHead()
 //입력: 헤드노드포인터, 새 노드 포인터
 //출력: 없음
-void insertHead(List* pList, Node* newNode) {
+void insertHead(List* pList, Node* newNode) {  //critical section은 데이터를 바꾸는 것으로 다른 놈들이 한번에 들어오는 것을 막는다
     newNode->pNext = pList->pHead; //#1
     pList->pHead = newNode; //#2
 }
@@ -106,7 +106,7 @@ int main()
 }
 
 DWORD WINAPI ThreadFunc(LPVOID ptr)
-{
+{ 
 
     List* pList = (List*)ptr;
     for (int i = 0; i < 1000000; i++)
