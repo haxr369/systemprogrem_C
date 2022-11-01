@@ -75,7 +75,7 @@ int main()
         hThrd[i] = CreateThread(NULL,//스레드KO(kernel object) 생성 후 핸들을 반환한다.
             0,
             ThreadFunc,//함수 포인터
-            (LPVOID)&pHead,//함수의 매개변수, 단 하나만 허락
+            (LPVOID)&pHead,//함수의 매개변수, 단 하나만 허락  head 포인터의 포인터를 입력
             0,
             &threadId);
         if (hThrd[i])
@@ -88,7 +88,7 @@ int main()
             return 0;
         }
     }
-    WaitForMultipleObjects(5, hThrd, TRUE, INFINITE);//모든 스레드가 종료되어야 넘어간다.
+    WaitForMultipleObjects(5, hThrd, TRUE, INFINITE);//모든 스레드가 종료되어야 넘어간다. 무한으로 기다린다.
     for (i = 0; i < 5; i++) {
         CloseHandle(hThrd[i]);//1.스레드 실행 종료 2. CloseHandle() 스레드 KO를 소멸
     }
