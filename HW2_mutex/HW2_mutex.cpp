@@ -1,30 +1,4 @@
-﻿// testDeadlock.cpp : 이 파일에는 'main' 함수가 포함됩니다. 거기서 프로그램 실행이 시작되고 종료됩니다.
-//
-//**************************************************************
-// 제목: Dead Lock
-// 기능: swap list함수에 의한 dead lock 데모
-// 파일이름: deadlock.cpp
-// 수정날짜: 2022년11월8일
-// 작성자: 최성종
-//************************************************************
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <windows.h>
-typedef struct node {
-	int data;
-	struct node* pNext;
-} Node;
-typedef struct linkedList {
-	Node* pHead;
-	CRITICAL_SECTION critical_sec;
-	int dummy;
-} LinkedList;
-
-//함수 printLL()
-//입력: Linked List의 포인터
-//출력: 없음
-//부수효과: 화면에 Linked List 데이터 값을 출력한다.
+﻿// mutex를 사용해서 deadlock을 방지하는 솔루션을 만들어보자!!!
 void printLL(LinkedList* pLL) {
 	Node* pNode;
 	pNode = pLL->pHead;
