@@ -1,20 +1,54 @@
-﻿// 11_15.cpp : 이 파일에는 'main' 함수가 포함됩니다. 거기서 프로그램 실행이 시작되고 종료됩니다.
+﻿// crt_fread_s.c
+// Command line: cl /EHsc /nologo /W4 crt_fread_s.c
 //
+// This program opens a file that's named FREAD.OUT and
+// writes characters to the file. It then tries to open
+// FREAD.OUT and read in characters by using fread_s. If the attempt succeeds,
+// the program displays the number of actual items read.
 
-#include <iostream>
+#include <stdio.h>    // C standard library ex)stdio. stdlib ..... 마이크로소프트에서는  C Run Time libaray CRT라고 됨.
 
-int main()
+#define BUFFERSIZE 30
+#define DATASIZE 25
+#define ELEMENTCOUNT 2
+#define ELEMENTSIZE (DATASIZE/ELEMENTCOUNT)
+#define FILENAME "FREAD.OUT"
+
+int main(void)
 {
-    std::cout << "Hello World!\n";
+    FILE* stream;               // #1 파일 포인터를 정의
+    char list[30];
+    int  i, numread, numwritten;
+
+    for (i = 0; i < DATASIZE; i++)
+        list[i] = (char)('z' - i);
+    list[DATASIZE] = '\0'; // terminal null so we can print it
+
+    // Open file in text mode:
+    if (fopen_s(&stream, FILENAME, "w+t") == 0)   // #2 파일 포인터로 파일을 open
+    {
+        // Write DATASIZE characters to stream
+        printf("Contents of buffer before write/read:\n\t%s\n\n", list);
+        numwritten = fwrite(list, sizeof(char), DATASIZE, stream); //#3파일에 글을 작성 읽고 쓰기할 때 파일 포인터를 입력!
+        printf("Wrote %d items\n\n", numwritten);
+        fclose(stream); //#4 파일을 작성하고 닫기
+    }
+    else {
+        printf("Problem opening the file\n");
+        return -1;
+    }
+
+    if (fopen_s(&stream, FILENAME, "r+t") == 0) {
+        // Attempt to read in characters in 2 blocks of 11
+        //버퍼사이즈는 list의 사이즈, 
+        //stream의 
+        numread = fread_s(list, BUFFERSIZE, ELEMENTSIZE, ELEMENTCOUNT, stream); //#5파일을 읽음
+        printf("Number of %d-byte elements read = %d\n\n", ELEMENTSIZE, numread);
+        printf("Contents of buffer after write/read:\n\t%s\n", list);
+        fclose(stream);                                             //#6파일을 닫음
+    }
+    else {
+        printf("File could not be opened\n");
+        return -1;
+    }
 }
-
-// 프로그램 실행: <Ctrl+F5> 또는 [디버그] > [디버깅하지 않고 시작] 메뉴
-// 프로그램 디버그: <F5> 키 또는 [디버그] > [디버깅 시작] 메뉴
-
-// 시작을 위한 팁: 
-//   1. [솔루션 탐색기] 창을 사용하여 파일을 추가/관리합니다.
-//   2. [팀 탐색기] 창을 사용하여 소스 제어에 연결합니다.
-//   3. [출력] 창을 사용하여 빌드 출력 및 기타 메시지를 확인합니다.
-//   4. [오류 목록] 창을 사용하여 오류를 봅니다.
-//   5. [프로젝트] > [새 항목 추가]로 이동하여 새 코드 파일을 만들거나, [프로젝트] > [기존 항목 추가]로 이동하여 기존 코드 파일을 프로젝트에 추가합니다.
-//   6. 나중에 이 프로젝트를 다시 열려면 [파일] > [열기] > [프로젝트]로 이동하고 .sln 파일을 선택합니다.
