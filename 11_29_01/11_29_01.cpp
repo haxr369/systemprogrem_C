@@ -57,6 +57,7 @@ int __cdecl main(int argc, char** argv)
     // Attempt to connect to an address until one succeeds
     for (ptr = result; ptr != NULL; ptr = ptr->ai_next) {
 
+        // 소캣 생성
         // Create a SOCKET for connecting to server
         ConnectSocket = socket(ptr->ai_family, ptr->ai_socktype,
             ptr->ai_protocol);
@@ -66,6 +67,7 @@ int __cdecl main(int argc, char** argv)
             return 1;
         }
 
+        // 연결 요청!
         // Connect to server.
         iResult = connect(ConnectSocket, ptr->ai_addr, (int)ptr->ai_addrlen);
         if (iResult == SOCKET_ERROR) {
@@ -85,7 +87,7 @@ int __cdecl main(int argc, char** argv)
     }
 
     // Send an initial buffer
-    iResult = send(ConnectSocket, sendbuf, (int)strlen(sendbuf), 0);
+    iResult = send(ConnectSocket, sendbuf, (int)strlen(sendbuf), 0); //14바이트를 보내기
     if (iResult == SOCKET_ERROR) {
         printf("send failed with error: %d\n", WSAGetLastError());
         closesocket(ConnectSocket);
