@@ -1,4 +1,5 @@
-﻿#undef UNICODE
+﻿//server
+#undef UNICODE
 
 #define WIN32_LEAN_AND_MEAN
 
@@ -60,7 +61,7 @@ int __cdecl main(void)
         return 1;
     }
 
-    // Setup the TCP listening socket
+    // Setup the TCP listening socket 특정 포트넘버에서 기다리는가?
     iResult = bind(ListenSocket, result->ai_addr, (int)result->ai_addrlen);
     if (iResult == SOCKET_ERROR) {
         printf("bind failed with error: %d\n", WSAGetLastError());
