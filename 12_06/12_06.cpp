@@ -114,7 +114,7 @@ int main(int argc, char* argv[])
     if (err < 0)
         FatalError("bind() failed");
 
-    ghCompletionPort = CreateIoCompletionPort(
+    ghCompletionPort = CreateIoCompletionPort(  //완료포트 생성
         INVALID_HANDLE_VALUE,
         NULL,   // No prior port
         0,      // No key
@@ -140,7 +140,7 @@ int main(int argc, char* argv[])
         struct ContextKey* pKey;
 
         clientAddressLength = sizeof(clientAddress);
-        newsocket = accept(listener,
+        newsocket = accept(listener,            // 리스닝 소캣과 커넥션 소캣은 다른 소캣!!
             (struct sockaddr*)&clientAddress,
             &clientAddressLength);
         if (newsocket < 0)
@@ -151,7 +151,7 @@ int main(int argc, char* argv[])
 
         // Create a context key and initialize it.
         // calloc will zero the buffer
-        pKey = (ContextKey*)calloc(1, sizeof(struct ContextKey));
+        pKey = (ContextKey*)calloc(1, sizeof(struct ContextKey));  // 동적 메모리 할당
         pKey->sock = newsocket;
         pKey->ovOut.hEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
         // Set the event for writing so that packets
@@ -160,15 +160,15 @@ int main(int argc, char* argv[])
         pKey->ovOut.hEvent = (HANDLE)((DWORD)pKey->ovOut.hEvent | 0x1);
 
         // Associate the socket with the completion port
-        CreateIoCompletionPort(
-            (HANDLE)newsocket,
-            ghCompletionPort,
-            (DWORD)pKey,   // No key
+        CreateIoCompletionPort( //I/O 핸들, 소캣들을 completion port와 연결.
+            (HANDLE)newsocket,      // I/O 핸들    소캣==핸들, newsocket 정보를 pKey에 넣어줌.
+            ghCompletionPort,       // completion port 
+            (DWORD)pKey,   // No key void와 동일 pKey를 completion port에 넣어줌. 
             0              // Use default # of threads
         );
 
         // Kick off the first read
-        IssueRead(pKey);
+        IssueRead(pKey);  // I/O request를 받을 준비
     }
     return 0;
 }
@@ -210,9 +210,9 @@ DWORD WINAPI ThreadFunc(LPVOID pVoid)
         bResult = GetQueuedCompletionStatus(
             ghCompletionPort,
             &dwNumRead,
-            (PULONG_PTR)&pCntx,
-            &lpOverlapped,
-            INFINITE
+            (PULONG_PTR)&pCntx, // 어느 소캣에서 요청이 있었는지 pKey를 읽음
+            &lpOverlapped,      // 
+            INFINITE            // 시간 제한
         );
 
         if (bResult == FALSE
@@ -233,7 +233,7 @@ DWORD WINAPI ThreadFunc(LPVOID pVoid)
                 "ThreadFunc - I/O operation failed\n");
         }
 
-        else if (dwNumRead == 0)
+        else if (dwNumRead == 0) //커넥션 끝내기
         {
             closesocket(pCntx->sock);
             free(pCntx);
@@ -250,7 +250,7 @@ DWORD WINAPI ThreadFunc(LPVOID pVoid)
             *pch++ = pCntx->InBuffer[0];
             *pch = '\0';    // For debugging, WriteFile doesn't care
             if (pCntx->InBuffer[0] == '\n')
-            {
+            {//소캣에 다시 쓰기
                 WriteFile(
                     (HANDLE)(pCntx->sock),
                     pCntx->OutBuffer,
@@ -276,7 +276,7 @@ DWORD WINAPI ThreadFunc(LPVOID pVoid)
  * on a socket.  Make sure we handle errors
  * that are recoverable.
  */
-void IssueRead(struct ContextKey* pCntx)
+void IssueRead(struct ContextKey* pCntx)  //연결 요청 대기
 {
     int     i = 0;
     BOOL    bResult;
